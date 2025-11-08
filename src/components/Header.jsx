@@ -48,21 +48,31 @@ function Header() {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item));
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+    let isThrottled = false;
 
-      let currentSection = 'home';
-      for (const section of sections) {
-        if (section && section.offsetTop <= scrollPosition) {
-          currentSection = section.id;
+    const handleScroll = () => {
+      if (isThrottled) return;
+      isThrottled = true;
+
+      setTimeout(() => {
+        const sections = navItems.map(item => document.getElementById(item));
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        let currentSection = 'home';
+        for (const section of sections) {
+          if (section && section.offsetTop <= scrollPosition) {
+            currentSection = section.id;
+          }
         }
-      }
-      setActiveSection(currentSection);
+        setActiveSection(currentSection);
+        isThrottled = false;
+      }, 100); // Run this check at most every 100ms
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {

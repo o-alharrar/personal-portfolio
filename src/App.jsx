@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
+import { CssBaseline, Box, CircularProgress } from '@mui/material'
 import GradientBackground from '@/components/GradientBackground.jsx'
 import Layout from '@/components/Layout.jsx'
-import Hero from '@/components/Hero.jsx'
-import About from '@/components/About.jsx'
-import Education from '@/components/Education.jsx'
-import Skills from '@/components/Skills.jsx'
-import Projects from '@/components/Projects.jsx'
-import Contact from '@/components/Contact.jsx'
+
+const Hero = React.lazy(() => import('@/components/Hero.jsx'));
+const About = React.lazy(() => import('@/components/About.jsx'));
+const Education = React.lazy(() => import('@/components/Education.jsx'));
+const Skills = React.lazy(() => import('@/components/Skills.jsx'));
+const Projects = React.lazy(() => import('@/components/Projects.jsx'));
+const Contact = React.lazy(() => import('@/components/Contact.jsx'));
 
 const theme = createTheme({
   palette: {
@@ -104,14 +105,22 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <GradientBackground>
-        <Layout>
-          <Hero />
-          <About />
-          <Education />
-          <Skills />
-          <Projects />
-          <Contact />
-        </Layout>
+        <Suspense 
+          fallback={
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <CircularProgress />
+            </Box>
+          }
+        >
+          <Layout>
+            <Hero />
+            <About />
+            <Education />
+            <Skills />
+            <Projects />
+            <Contact />
+          </Layout>
+        </Suspense>
       </GradientBackground>
     </ThemeProvider>
   )

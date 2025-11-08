@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { keyframes } from '@emotion/react';
 
 const gradientAnimation = keyframes`
@@ -9,6 +9,7 @@ const gradientAnimation = keyframes`
 `;
 
 function GradientBackground({ children }) {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -16,7 +17,7 @@ function GradientBackground({ children }) {
         minHeight: '100vh',
         background: `linear-gradient(-45deg, #000000, #110118, #000000, #011218)`,
         backgroundSize: '400% 400%',
-        animation: `${gradientAnimation} 15s ease infinite`,
+        animation: `${gradientAnimation} 25s ease infinite`, // Slow down the animation
         color: 'white',
         '&::before': {
           content: '""',
@@ -26,7 +27,10 @@ function GradientBackground({ children }) {
           right: 0,
           bottom: 0,
           background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%)',
-        }
+        },
+        [theme.breakpoints.down('md')]: {
+          animation: 'none', // Disable animation on smaller screens
+        },
       }}
     >
       {children}
