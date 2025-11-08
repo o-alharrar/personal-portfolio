@@ -14,7 +14,7 @@ function GradientBackground({ children }) {
       sx={{
         position: 'relative',
         minHeight: '100vh',
-        background: `linear-gradient(-45deg, #000000ff, #560977ff, #b011b6ff, #011218)`,
+        background: `linear-gradient(-45deg, #000000, #110118, #000000, #011218)`,
         backgroundSize: '400% 400%',
         animation: `${gradientAnimation} 15s ease infinite`,
         color: 'white',
