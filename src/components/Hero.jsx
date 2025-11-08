@@ -105,7 +105,7 @@ function Hero() {
               }}
             />
           </Stack>
-          <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
             <Button
               onClick={() => handleNavClick('#projects')}
               variant="contained"

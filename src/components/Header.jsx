@@ -48,30 +48,29 @@ function Header() {
   };
 
   useEffect(() => {
-    let isThrottled = false;
-
-    const handleScroll = () => {
-      if (isThrottled) return;
-      isThrottled = true;
-
-      setTimeout(() => {
-        const sections = navItems.map(item => document.getElementById(item));
-        const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-        let currentSection = 'home';
-        for (const section of sections) {
-          if (section && section.offsetTop <= scrollPosition) {
-            currentSection = section.id;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
-        }
-        setActiveSection(currentSection);
-        isThrottled = false;
-      }, 100); // Run this check at most every 100ms
-    };
+        });
+      },
+      {
+        rootMargin: '-50% 0px -50% 0px', // Trigger when the section is in the middle of the screen
+        threshold: 0,
+      }
+    );
 
-    window.addEventListener('scroll', handleScroll);
+    const sections = navItems.map(item => document.getElementById(item));
+    sections.forEach(section => {
+      if (section) observer.observe(section);
+    });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      sections.forEach(section => {
+        if (section) observer.unobserve(section);
+      });
     };
   }, []);
 
@@ -106,8 +105,16 @@ function Header() {
         background: 'rgba(28, 28, 30, 0.7)',
         backdropFilter: 'blur(10px)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
+        // Ensure the toolbar doesn't overflow on small screens
+        maxWidth: 'calc(100% - 32px)', 
       }}>
-        <Box ref={navRef} sx={{ position: 'relative', display: 'inline-flex' }}>
+        <Box ref={navRef} sx={{ 
+          position: 'relative', 
+          display: 'inline-flex',
+          overflowX: 'auto', // Enable horizontal scrolling on mobile
+          scrollbarWidth: 'none', // Hide scrollbar for Firefox
+          '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for Chrome/Safari
+        }}>
           <Box
             className="active-pill"
             sx={{

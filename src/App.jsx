@@ -83,10 +83,9 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 20,
-          background: 'rgba(28, 28, 30, 0.8)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          // Use a solid, slightly transparent background instead of an expensive blur
+          background: 'rgba(28, 28, 30, 0.6)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
         },
       },
     },

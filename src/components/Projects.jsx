@@ -136,6 +136,7 @@ function Projects() {
         'Categories and transaction management',
       ],
       github: 'https://github.com/o-alharrar/finance-tracker',
+      demo: 'https://financetracker.appwrite.network/',
       status: 'In Development',
     },
   ]
@@ -171,4 +172,3 @@ function Projects() {
 }
 
 export default Projects
-

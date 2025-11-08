@@ -32,10 +32,10 @@ function Footer() {
       }}
     >
       <Stack
-        direction="row"
+        direction={{ xs: 'column', sm: 'row' }} // Stack on mobile, row on larger screens
         justifyContent="center"
         alignItems="center"
-        spacing={4}
+        spacing={{ xs: 2, sm: 4 }} // Adjust spacing for different screen sizes
       >
         <Fade in timeout={1000}>
           <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
